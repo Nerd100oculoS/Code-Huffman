@@ -10,7 +10,7 @@ int main(){
     //float vector[] = {0.08, 0.1, 0.12, 0.15, 0.20, 0.35};
     Tree *aux;
     Record r;
-
+    float qtd_words;
     map<string, float> Umap;
     
     /*for(int i = 0; i < 6; i++){
@@ -27,7 +27,7 @@ int main(){
 
     }
     */
-    MapFreq(&Umap);
+    MapFreq(&Umap, &qtd_words);
 
     cout << endl;
     
@@ -47,7 +47,9 @@ int main(){
     }
     
     OrdenaFlorest(&florest);
-
+    cout << qtd_words << endl;
+    NormalizateFrequencies(&florest, &qtd_words);
+    
     /*vector<Tree*>::iterator itv;
 
     for(itv = florest.begin(); itv != florest.end(); ++itv){
@@ -55,10 +57,10 @@ int main(){
         cout << (*itv)->reg.key << " -> " << (*itv)->reg.freq << endl; 
     }
     */
-    //NormalizateFrequencies(&florest);
 
     TreeRecursiveInsert(florest, &HT);
 
+    cout << "frq raiz: " << HT->reg.freq << endl;
     Print(HT);
     cout << endl;
 

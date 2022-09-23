@@ -62,23 +62,27 @@ void TreeRecursiveInsert(vector<Tree*> florest, Tree **raiz){
 
   vector<Tree*> reduce;
   ReduceFlorest(florest, &reduce, t);
-
+  
+  /*
   for(auto n: florest){cout << n->reg.key << "-" << n->reg.freq << " ";}
   cout << endl;
 
   for(auto n: reduce){cout << n->reg.key << "-" << n->reg.freq << " ";}
   cout << endl << endl;
-  
+  */
+ 
   TreeRecursiveInsert(reduce,raiz);
 
 }
 
-void MapFreq(map<string, float> *map_freq){
+void MapFreq(map<string, float> *map_freq, float *qtd_words){
   
   ifstream file("./src/input/text.txt");
   
   string str_line;
   string token;
+
+  *qtd_words = 0.0; 
   if(file.is_open()){
       
       while(getline(file, str_line)){
@@ -96,6 +100,8 @@ void MapFreq(map<string, float> *map_freq){
             (*map_freq)[token] = 1;
 
           }
+
+          (*qtd_words)++;
         }
       }
 
@@ -150,7 +156,7 @@ void OrdenaFlorest(vector<Tree*> *florest){
   }
 }
 
-/*void NormalizateFrequencies(vector<Tree*> *florest){
+void NormalizateFrequencies(vector<Tree*> *florest, float *qtd_words){
 
   float max = (float)florest->back()->reg.freq;
   //cout << max << endl;
@@ -160,10 +166,10 @@ void OrdenaFlorest(vector<Tree*> *florest){
   
   for(int i = 0; i < florest->size(); i++){
 
-    (*florest)[i]->reg.freq = (float)( (*florest)[i]->reg.freq );
+    (*florest)[i]->reg.freq = (*florest)[i]->reg.freq/(*qtd_words);
+
   }
 }
-*/
 
 void MakesCodificationTable(Tree *raiz, map<string, string> *CodTable, string binary, string aux){
   
