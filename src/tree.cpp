@@ -70,7 +70,7 @@ void TreeRecursiveInsert(vector<Tree*> florest, Tree **raiz){
   for(auto n: reduce){cout << n->reg.key << "-" << n->reg.freq << " ";}
   cout << endl << endl;
   */
- 
+
   TreeRecursiveInsert(reduce,raiz);
 
 }
@@ -109,7 +109,8 @@ void MapFreq(map<string, float> *map_freq, float *qtd_words){
 
     cout << "erro ao abrir arquivo!" << endl;
   }
-  
+
+  file.close();
 }
 
 
@@ -117,7 +118,6 @@ void ReduceFlorest(vector<Tree*> florest, vector<Tree*> *reduce, Tree *node_new)
   
   florest.erase(florest.begin());
   florest.erase(florest.begin());
-  int cont = 1;
   bool verify = true;
 
   for(auto n: florest){
@@ -181,6 +181,39 @@ void MakesCodificationTable(Tree *raiz, map<string, string> *CodTable, string bi
     string convert = raiz->reg.key;
     (*CodTable)[convert] = binary;
   }
+}
+
+void EncodingFile(map<string, string> *CodTable){
+
+  ifstream file("./src/input/text.txt");
+  ofstream exit_file("./src/input/output.txt");
+
+  string str_line;
+  string token;
+
+  
+  if(file.is_open()){
+      
+      while(getline(file, str_line)){
+
+        stringstream sstream(str_line);
+
+        while(getline(sstream, token, ' ')){
+
+          if(CodTable->find(token) != CodTable->end()){
+
+            exit_file << (*CodTable)[token];
+          }
+        }
+      }
+
+  }else{
+
+    cout << "erro ao abrir arquivo!" << endl;
+  }
+
+  file.close();
+  exit_file.close();
 }
 
 int isInTree(Tree *t, Record r) {

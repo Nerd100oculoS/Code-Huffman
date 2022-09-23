@@ -49,7 +49,7 @@ int main(){
     OrdenaFlorest(&florest);
     cout << qtd_words << endl;
     NormalizateFrequencies(&florest, &qtd_words);
-    
+
     /*vector<Tree*>::iterator itv;
 
     for(itv = florest.begin(); itv != florest.end(); ++itv){
@@ -73,6 +73,7 @@ int main(){
         cout << itr->first << " -> " << itr->second << endl; 
     }
     
+    EncodingFile(&CodTable);
 
     return 0;
 }

@@ -13,6 +13,7 @@
 #include<fstream>
 #include<sstream>
 
+
 using namespace std;
 
 typedef struct Record Record;
@@ -42,5 +43,6 @@ void MapFreq(map<string, float> *map_freq, float *qtd_words);
 void OrdenaFlorest(vector<Tree*> *florest);
 void MakesCodificationTable(Tree *raiz, map<string, string> *CodTable, string binary, string aux);
 void NormalizateFrequencies(vector<Tree*> *florest, float *qtd_words); // somente depois de ordenar o vetor.
+void EncodingFile(map<string, string> *CodTable);
 
 #endif
