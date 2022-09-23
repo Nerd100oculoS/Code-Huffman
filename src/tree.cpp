@@ -73,6 +73,40 @@ void TreeRecursiveInsert(vector<Tree*> florest, Tree **raiz){
 
 }
 
+void MapFreq(map<string, float> *map_freq){
+  
+  ifstream file("./src/input/text.txt");
+  
+  string str_line;
+  string token;
+  if(file.is_open()){
+      
+      while(getline(file, str_line)){
+
+        stringstream sstream(str_line);
+
+        while(getline(sstream, token, ' ')){
+
+          if(map_freq->find(token) != map_freq->end()){
+
+            (*map_freq)[token]++;
+          
+          }else{
+
+            (*map_freq)[token] = 1;
+
+          }
+        }
+      }
+
+  }else{
+
+    cout << "erro ao abrir arquivo!" << endl;
+  }
+  
+}
+
+
 void ReduceFlorest(vector<Tree*> florest, vector<Tree*> *reduce, Tree *node_new){
   
   florest.erase(florest.begin());
@@ -97,6 +131,23 @@ void ReduceFlorest(vector<Tree*> florest, vector<Tree*> *reduce, Tree *node_new)
     reduce->push_back(node_new);
   }
 
+}
+
+void OrdenaFlorest(vector<Tree*> *florest){
+
+  Tree *aux;
+  int i, j;
+  for(i = 0; i < florest->size(); i++){
+
+    aux = (*florest)[i];
+
+    for(j = i; (j > 0) && (aux->reg.freq < (*florest)[j-1]->reg.freq); j--){
+
+      (*florest)[j] = (*florest)[j-1];
+    }
+
+    (*florest)[j] = aux;
+  }
 }
 
 int isInTree(Tree *t, Record r) {

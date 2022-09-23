@@ -8,6 +8,10 @@
 
 #include<vector>
 #include<iostream>
+#include<string>
+#include<map>
+#include<fstream>
+#include<sstream>
 
 using namespace std;
 
@@ -31,8 +35,10 @@ Tree* CreateTree();
 bool TVazia(Tree **t);
 void insertTree(Tree **t, Record r);
 int isInTree(Tree *t, Record r);
-void TreePosition(Tree **t1, Tree **t2,vector<Tree*> florest);
 
+void TreePosition(Tree **t1, Tree **t2,vector<Tree*> florest);
 void Print(Tree *t);
+void MapFreq(map<string, float> *map_freq);
+void OrdenaFlorest(vector<Tree*> *florest);
 
 #endif
