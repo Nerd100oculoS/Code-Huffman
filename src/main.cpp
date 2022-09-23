@@ -1,14 +1,13 @@
 #include "tree.hpp"
 
-
 using namespace std;
 
 int main(){
     
     Tree *HT;
     vector<Tree*> florest;
-    char *caracter[] = {"a","b","c","d", "e", "f"};
-    float vector[] = {0.08, 0.1, 0.12, 0.15, 0.20, 0.35};
+    //char *caracter[] = {"a","b","c","d", "e", "f"};
+    //float vector[] = {0.08, 0.1, 0.12, 0.15, 0.20, 0.35};
     Tree *aux;
     Record r;
 
@@ -30,6 +29,8 @@ int main(){
     */
     MapFreq(&Umap);
 
+    cout << endl;
+    
     map<string, float>::iterator it;
 
     for(it = Umap.begin(); it != Umap.end(); ++it){
@@ -47,9 +48,29 @@ int main(){
     
     OrdenaFlorest(&florest);
 
+    /*vector<Tree*>::iterator itv;
+
+    for(itv = florest.begin(); itv != florest.end(); ++itv){
+
+        cout << (*itv)->reg.key << " -> " << (*itv)->reg.freq << endl; 
+    }
+    */
+    //NormalizateFrequencies(&florest);
+
     TreeRecursiveInsert(florest, &HT);
 
     Print(HT);
+    cout << endl;
+
+    map<string, string> CodTable;
+    MakesCodificationTable(HT, &CodTable,"","");
+
+    map<string, string>::iterator itr;
+    for(itr = CodTable.begin(); itr != CodTable.end(); ++itr){
+
+        cout << itr->first << " -> " << itr->second << endl; 
+    }
+    
 
     return 0;
 }

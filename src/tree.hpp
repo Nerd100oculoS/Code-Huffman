@@ -40,5 +40,7 @@ void TreePosition(Tree **t1, Tree **t2,vector<Tree*> florest);
 void Print(Tree *t);
 void MapFreq(map<string, float> *map_freq);
 void OrdenaFlorest(vector<Tree*> *florest);
+void MakesCodificationTable(Tree *raiz, map<string, string> *CodTable, string binary, string aux);
+void NormalizateFrequencies(vector<Tree*> *florest); // somente depois de ordenar o vetor.
 
 #endif

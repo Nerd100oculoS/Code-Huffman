@@ -63,12 +63,12 @@ void TreeRecursiveInsert(vector<Tree*> florest, Tree **raiz){
   vector<Tree*> reduce;
   ReduceFlorest(florest, &reduce, t);
 
-  /*for(auto n: florest){cout << n->reg.key << "-" << n->reg.freq << " ";}
+  for(auto n: florest){cout << n->reg.key << "-" << n->reg.freq << " ";}
   cout << endl;
 
   for(auto n: reduce){cout << n->reg.key << "-" << n->reg.freq << " ";}
   cout << endl << endl;
-  */
+  
   TreeRecursiveInsert(reduce,raiz);
 
 }
@@ -147,6 +147,33 @@ void OrdenaFlorest(vector<Tree*> *florest){
     }
 
     (*florest)[j] = aux;
+  }
+}
+
+/*void NormalizateFrequencies(vector<Tree*> *florest){
+
+  float max = (float)florest->back()->reg.freq;
+  //cout << max << endl;
+
+  float min = (float)florest->front()->reg.freq;
+  //cout << min << endl;
+  
+  for(int i = 0; i < florest->size(); i++){
+
+    (*florest)[i]->reg.freq = (float)( (*florest)[i]->reg.freq );
+  }
+}
+*/
+
+void MakesCodificationTable(Tree *raiz, map<string, string> *CodTable, string binary, string aux){
+  
+  if(!(raiz == NULL)){
+    
+    binary.append(aux);
+    MakesCodificationTable(raiz->esq,CodTable,binary,"0");
+    MakesCodificationTable(raiz->dir,CodTable,binary,"1");
+    string convert = raiz->reg.key;
+    (*CodTable)[convert] = binary;
   }
 }
 
