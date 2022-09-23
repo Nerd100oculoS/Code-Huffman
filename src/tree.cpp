@@ -20,6 +20,13 @@ void insertTree(Tree **t, Record r){
   }
 }
 
+/**
+ * @brief Atribui as posições das árvores para montar a Huffman Tree.
+ * 
+ * @param t1 Primeiro elemento da floresta.
+ * @param t2 Segundo elemento da florest.
+ * @param florest Vetor de Nós.
+ */
 void TreePosition(Tree **t1, Tree **t2,vector<Tree*> florest){
 
   vector<Tree*> :: iterator it;
@@ -37,6 +44,12 @@ void TreePosition(Tree **t1, Tree **t2,vector<Tree*> florest){
   }
 }
 
+/**
+ * @brief Monta a árvore de Huffman.
+ * 
+ * @param florest vetor com todos os nós.
+ * @param raiz recebe o endereço da raiz da árvore após montada.
+ */
 void TreeRecursiveInsert(vector<Tree*> florest, Tree **raiz){
   
   if(florest.size() <= 1){
@@ -71,10 +84,16 @@ void TreeRecursiveInsert(vector<Tree*> florest, Tree **raiz){
   cout << endl << endl;
   */
 
-  TreeRecursiveInsert(reduce,raiz);
+  TreeRecursiveInsert(reduce,raiz); //Faz a chamada recursiva.
 
 }
 
+/**
+ * @brief Tabela Hash com as frequências de cada palavra.
+ * 
+ * @param map_freq Endereço da Tabela Hash de Frequência.
+ * @param qtd_words Contador de quantidade de palavras no texto.
+ */
 void MapFreq(map<string, float> *map_freq, float *qtd_words){
   
   ifstream file("./src/input/text.txt");
@@ -115,7 +134,13 @@ void MapFreq(map<string, float> *map_freq, float *qtd_words){
   file.close();
 }
 
-
+/**
+ * @brief Faz a remoção dos nós que formarão uma sub-árvore e o insere novamente no vetor de nós.
+ * 
+ * @param florest Vetor de nós.
+ * @param reduce Vetor de nós auxiliar.
+ * @param node_new Novo nó criado a partir dos nós iniciais.
+ */
 void ReduceFlorest(vector<Tree*> florest, vector<Tree*> *reduce, Tree *node_new){
   
   florest.erase(florest.begin());
@@ -141,6 +166,11 @@ void ReduceFlorest(vector<Tree*> florest, vector<Tree*> *reduce, Tree *node_new)
 
 }
 
+/**
+ * @brief Ordena de de forma crescente o vetor de nós.
+ * 
+ * @param florest Endereço do Vetor de nós(&florest).
+ */
 void OrdenaFlorest(vector<Tree*> *florest){
 
   Tree *aux;
@@ -158,6 +188,12 @@ void OrdenaFlorest(vector<Tree*> *florest){
   }
 }
 
+/**
+ * @brief Faz a normalização das frequancias de cada nó do vetor de nós.
+ * 
+ * @param florest Endereço do Vetor de nós(&florest).
+ * @param qtd_words Contador de palavras.
+ */
 void NormalizateFrequencies(vector<Tree*> *florest, float *qtd_words){
 
   float max = (float)florest->back()->reg.freq;
@@ -173,6 +209,14 @@ void NormalizateFrequencies(vector<Tree*> *florest, float *qtd_words){
   }
 }
 
+/**
+ * @brief Cria a Tabela Hash de Codificação.
+ * 
+ * @param raiz Raiz da Árvore de Huffman.
+ * @param CodTable Endereço da Tabela Hash de Codificação(&CodTable).
+ * @param binary String de 0's e 1's.
+ * @param aux string auxiliar.
+ */
 void MakesCodificationTable(Tree *raiz, map<string, string> *CodTable, string binary, string aux){
   
   if(!(raiz == NULL)){
@@ -185,6 +229,11 @@ void MakesCodificationTable(Tree *raiz, map<string, string> *CodTable, string bi
   }
 }
 
+/**
+ * @brief Cria o arquivo de Codificação.
+ * 
+ * @param CodTable Endereço da Tabela Hash de Codificação(&CodTable).
+ */
 void EncodingFile(map<string, string> *CodTable){
 
   ifstream file("./src/input/text.txt");
@@ -220,9 +269,15 @@ void EncodingFile(map<string, string> *CodTable){
   exit_file.close();
 }
 
+/**
+ * @brief Decodifica o arquivo codificado.
+ * 
+ * @param raiz Raiz da Árvore de Huffman.
+ */
 void DecodingFile(Tree *raiz){
 
   ifstream exit_file("./src/input/output.txt");
+  ofstream decodification_file("./src/output/exit_file.txt");
   char caracter;
   Tree *aux;
   aux = raiz;
@@ -232,8 +287,6 @@ void DecodingFile(Tree *raiz){
     while(exit_file.get(caracter)){
 
       if(!(aux == NULL)){
-
-        //cout << caracter << " ";
         
         if(caracter == '0'){
 
@@ -243,17 +296,23 @@ void DecodingFile(Tree *raiz){
 
           aux = aux->dir;
         }
+
         if(!(strcmp(aux->reg.key,"/") == 0)){
+          
           if(!(strcmp(aux->reg.key,"\n") == 0 )){
-            cout << aux->reg.key << " ";
+            decodification_file << aux->reg.key << " ";
           }else{
-            cout << aux->reg.key;
+            decodification_file << aux->reg.key;
           }
           aux = raiz;
+        
         }
       }
     }
   }
+
+  exit_file.close();
+  decodification_file.close();
 }
 
 int isInTree(Tree *t, Record r) {

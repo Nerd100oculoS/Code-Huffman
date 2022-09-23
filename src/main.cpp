@@ -4,35 +4,20 @@ using namespace std;
 
 int main(){
     
+// (1) ----------------------------------> Variaveis Gerais.
     Tree *HT;
     vector<Tree*> florest;
-    //char *caracter[] = {"a","b","c","d", "e", "f"};
-    //float vector[] = {0.08, 0.1, 0.12, 0.15, 0.20, 0.35};
+    
     Tree *aux;
     Record r;
     float qtd_words;
+
+// (2) ----------------------------------> Faz a cmputação das frequências.
     map<string, float> Umap;
-    
-    /*for(int i = 0; i < 6; i++){
-        
-        aux = CreateTree();
-        r.key = (char*)malloc(sizeof(char)*5);
-        strcpy(r.key,caracter[i]);
-        r.freq = vector[i];
-        
-
-        insertTree(&aux,r);
-
-        florest.push_back(aux);
-
-    }
-    */
     MapFreq(&Umap, &qtd_words);
 
-    cout << endl;
-    
+// (3) ----------------------------------> Monta a Floresta de nós.
     map<string, float>::iterator it;
-
     for(it = Umap.begin(); it != Umap.end(); ++it){
         
         aux = CreateTree();
@@ -45,38 +30,23 @@ int main(){
         florest.push_back(aux);
         
     }
-    
+
+// (4) ----------------------------------> Ordena a floresta, faz a normalização de frequências e constroi a Árvore de Huffman.
     OrdenaFlorest(&florest);
-    cout << qtd_words << endl;
     NormalizateFrequencies(&florest, &qtd_words);
-
-    /*vector<Tree*>::iterator itv;
-
-    for(itv = florest.begin(); itv != florest.end(); ++itv){
-
-        cout << (*itv)->reg.key << " -> " << (*itv)->reg.freq << endl; 
-    }
-    */
-
     TreeRecursiveInsert(florest, &HT);
+    
+    //Print(HT);
 
-    cout << "frq raiz: " << HT->reg.freq << endl;
-    Print(HT);
-    cout << endl;
-
+// (5) ----------------------------------> Cria a Tabela de Codificação.
     map<string, string> CodTable;
     MakesCodificationTable(HT, &CodTable,"","");
 
-    map<string, string>::iterator itr;
-    for(itr = CodTable.begin(); itr != CodTable.end(); ++itr){
-
-        cout << itr->first << " -> " << itr->second << endl; 
-    }
-    
+// (6) ----------------------------------> Codifica o texto.
     EncodingFile(&CodTable);
-    cout << endl << endl;
+
+// (1) ----------------------------------> Decodifica o arquivo de bits.
     DecodingFile(HT);
-    cout << endl;
 
     return 0;
 }
