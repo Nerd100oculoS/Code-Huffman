@@ -3,6 +3,7 @@
         "vector": "cpp",
         "iosfwd": "cpp",
         "istream": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "iostream": "cpp"
     }
 }
