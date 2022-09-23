@@ -74,6 +74,9 @@ int main(){
     }
     
     EncodingFile(&CodTable);
+    cout << endl << endl;
+    DecodingFile(HT);
+    cout << endl;
 
     return 0;
 }

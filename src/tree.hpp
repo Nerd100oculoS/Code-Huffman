@@ -44,5 +44,6 @@ void OrdenaFlorest(vector<Tree*> *florest);
 void MakesCodificationTable(Tree *raiz, map<string, string> *CodTable, string binary, string aux);
 void NormalizateFrequencies(vector<Tree*> *florest, float *qtd_words); // somente depois de ordenar o vetor.
 void EncodingFile(map<string, string> *CodTable);
+void DecodingFile(Tree *raiz);
 
 #endif

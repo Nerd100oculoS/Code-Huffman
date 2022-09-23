@@ -81,7 +81,7 @@ void MapFreq(map<string, float> *map_freq, float *qtd_words){
   
   string str_line;
   string token;
-
+  (*map_freq)["\n"] = 0;
   *qtd_words = 0.0; 
   if(file.is_open()){
       
@@ -103,6 +103,8 @@ void MapFreq(map<string, float> *map_freq, float *qtd_words){
 
           (*qtd_words)++;
         }
+
+        (*map_freq)["\n"]++;
       }
 
   }else{
@@ -191,21 +193,23 @@ void EncodingFile(map<string, string> *CodTable){
   string str_line;
   string token;
 
-  
   if(file.is_open()){
       
-      while(getline(file, str_line)){
+    while(getline(file, str_line)){
 
-        stringstream sstream(str_line);
+      stringstream sstream(str_line);
 
-        while(getline(sstream, token, ' ')){
+      while(getline(sstream, token, ' ')){
+        
+        if(CodTable->find(token) != CodTable->end()){
 
-          if(CodTable->find(token) != CodTable->end()){
-
-            exit_file << (*CodTable)[token];
-          }
+          exit_file << (*CodTable)[token];
+          cout << token << endl;
         }
       }
+
+      exit_file << (*CodTable)["\n"];
+    }
 
   }else{
 
@@ -214,6 +218,42 @@ void EncodingFile(map<string, string> *CodTable){
 
   file.close();
   exit_file.close();
+}
+
+void DecodingFile(Tree *raiz){
+
+  ifstream exit_file("./src/input/output.txt");
+  char caracter;
+  Tree *aux;
+  aux = raiz;
+
+  if(exit_file.is_open()){
+
+    while(exit_file.get(caracter)){
+
+      if(!(aux == NULL)){
+
+        //cout << caracter << " ";
+        
+        if(caracter == '0'){
+
+          aux = aux->esq;
+
+        }else{
+
+          aux = aux->dir;
+        }
+        if(!(strcmp(aux->reg.key,"/") == 0)){
+          if(!(strcmp(aux->reg.key,"\n") == 0 )){
+            cout << aux->reg.key << " ";
+          }else{
+            cout << aux->reg.key;
+          }
+          aux = raiz;
+        }
+      }
+    }
+  }
 }
 
 int isInTree(Tree *t, Record r) {
