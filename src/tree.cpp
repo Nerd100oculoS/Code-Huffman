@@ -253,7 +253,7 @@ void EncodingFile(map<string, string> *CodTable){
         if(CodTable->find(token) != CodTable->end()){
 
           exit_file << (*CodTable)[token];
-          cout << token << endl;
+          //cout << token << endl;
         }
       }
 
@@ -264,7 +264,7 @@ void EncodingFile(map<string, string> *CodTable){
 
     cout << "erro ao abrir arquivo!" << endl;
   }
-
+  cout << "Codificação feita com sucesso!" << endl << endl;
   file.close();
   exit_file.close();
 }
@@ -311,6 +311,7 @@ void DecodingFile(Tree *raiz){
     }
   }
 
+  cout << "Decodificação feita com sucesso!" << endl << endl;
   exit_file.close();
   decodification_file.close();
 }

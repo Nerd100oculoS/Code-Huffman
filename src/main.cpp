@@ -4,7 +4,7 @@ using namespace std;
 
 int main(){
     
-// (1) ----------------------------------> Variaveis Gerais.
+// -------------------------------------> Variaveis Gerais.
     Tree *HT;
     vector<Tree*> florest;
     
@@ -12,11 +12,11 @@ int main(){
     Record r;
     float qtd_words;
 
-// (2) ----------------------------------> Faz a cmputação das frequências.
+// (1) ----------------------------------> Faz a cmputação das frequências.
     map<string, float> Umap;
     MapFreq(&Umap, &qtd_words);
 
-// (3) ----------------------------------> Monta a Floresta de nós.
+// (2) ----------------------------------> Monta a Floresta de nós.
     map<string, float>::iterator it;
     for(it = Umap.begin(); it != Umap.end(); ++it){
         
@@ -31,21 +31,21 @@ int main(){
         
     }
 
-// (4) ----------------------------------> Ordena a floresta, faz a normalização de frequências e constroi a Árvore de Huffman.
+// (3) ----------------------------------> Ordena a floresta, faz a normalização de frequências e constroi a Árvore de Huffman.
     OrdenaFlorest(&florest);
     NormalizateFrequencies(&florest, &qtd_words);
     TreeRecursiveInsert(florest, &HT);
     
     //Print(HT);
 
-// (5) ----------------------------------> Cria a Tabela de Codificação.
+// (4) ----------------------------------> Cria a Tabela de Codificação.
     map<string, string> CodTable;
     MakesCodificationTable(HT, &CodTable,"","");
 
-// (6) ----------------------------------> Codifica o texto.
+// (5) ----------------------------------> Codifica o texto.
     EncodingFile(&CodTable);
 
-// (1) ----------------------------------> Decodifica o arquivo de bits.
+// (6) ----------------------------------> Decodifica o arquivo de bits.
     DecodingFile(HT);
 
     return 0;
